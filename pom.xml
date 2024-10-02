@@ -9,6 +9,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
-        <exec.mainClass>org.jhonatan.jdbc.Clase34_java_jbdc</exec.mainClass>
+        <exec.mainClass>org.jhonatan.jdbc.EjemploJdbc</exec.mainClass>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.22</version>
+        </dependency>
+    </dependencies>
 </project>
