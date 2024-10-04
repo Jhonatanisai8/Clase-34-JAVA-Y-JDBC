@@ -7,20 +7,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jhonatan.jdbc.util.ConexionBaseDatos;
 
 public class EjemploJdbc {
 
     public static void main(String[] args) {
         System.out.println("JAVA Y JBDC");
-        //indicamos la zona horario para evitar el error de la zona horaria
-        String ruta = "jdbc:mysql://localhost:3306/java_curso?serverTimezone=UTC";
-        String userName = "root";
-        String password = "1234";
 
         try (
                 //le pasamos los parametros
-                 Connection con = DriverManager.getConnection(ruta, userName, password); //creamos una sentencia 
-                  Statement stmt = con.createStatement(); //resultado 
+                 Connection con = ConexionBaseDatos.getInstance();  Statement stmt = con.createStatement(); //resultado 
                   ResultSet resultado = stmt.executeQuery("SELECT * FROM productos")) {
             //movemos el cursor
             while (resultado.next()) {
