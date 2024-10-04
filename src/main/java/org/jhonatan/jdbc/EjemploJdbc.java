@@ -17,29 +17,24 @@ public class EjemploJdbc {
         String userName = "root";
         String password = "1234";
 
-        try {
-
-            //le pasamos los parametros
-            Connection con = DriverManager.getConnection(ruta, userName, password);
-
-            //creamos una sentencia 
-            Statement stmt = con.createStatement();
-
-            //resultado 
-            ResultSet resultado = stmt.executeQuery("SELECT * FROM productos");
-
+        try (
+                //le pasamos los parametros
+                 Connection con = DriverManager.getConnection(ruta, userName, password); //creamos una sentencia 
+                  Statement stmt = con.createStatement(); //resultado 
+                  ResultSet resultado = stmt.executeQuery("SELECT * FROM productos")) {
             //movemos el cursor
             while (resultado.next()) {
-                System.out.println(resultado.getString("nombre"));
+                System.out.print(resultado.getInt("idproducto"));
+                System.out.print(" | ");
+                System.out.print(resultado.getString("nombre"));
+                System.out.print(" | ");
+                System.out.print(resultado.getDouble("precio"));
+                System.out.print(" | ");
+                System.out.println(resultado.getDate("fecha"));
             }
 
-            //cerramos los recursos
-            resultado.close();
-            stmt.close();
-            con.close();
         } catch (SQLException ex) {
             Logger.getLogger(EjemploJdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 }
