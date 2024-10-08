@@ -1,6 +1,7 @@
 package org.jhonatan.jdbc.modelo.repositorio;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,15 +43,12 @@ public class ProductoRepositorioImpl
 
             //parametro de la consulta
             stmt.setLong(1, id);
-
-            //ejecutamos la consulta 
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                p = creaProducto(rs);
+            try ( //ejecutamos la consulta y se cierra automaticamente
+                     ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    p = creaProducto(rs);
+                }
             }
-
-            rs.close();
         } catch (Exception e) {
             System.out.println("Error por id: " + e.getMessage());
         }
@@ -60,12 +58,41 @@ public class ProductoRepositorioImpl
 
     @Override
     public void guardar(Producto t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql;
+        if (t.getId() != null && t.getId() > 0) {
+            sql = "UPDATE productos SET nombre = ?, precio = ? WHERE idproducto = ? ";
+        } else {
+            sql = "INSERT INTO productos (nombre,precio,fecha) VALUES (?,?,?)";
+        }
+        try ( PreparedStatement stmt = getConection().prepareStatement(sql)) {
+
+            //le pasamos los parametros
+            stmt.setString(1, t.getNombre());
+            stmt.setDouble(2, t.getPrecio());
+
+            if (t.getId() != null && t.getId() > 0) {
+                stmt.setLong(3, t.getId());
+            } else {
+                stmt.setDate(3, new Date(t.getFechaRegistro().getTime()));
+            }
+
+            //ejecutamos
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("error al guardar: " + e.getMessage());
+        }
     }
 
     @Override
     public void eliminar(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try ( PreparedStatement stmt = getConection()
+                .prepareStatement("DELETE FROM productos WHERE idproducto = ?")) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al eliminar: " + e.getMessage());
+        }
     }
 
     public Producto creaProducto(ResultSet rs) throws SQLException {
