@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class ConexionBaseDatos {
     //indicamos la zona horario para evitar el error de la zona horaria
 
-    private static String ruta = "jdbc:mysql://localhost:3306/java_curso?serverTimezone=UTC";
-    private static String userName = "root";
-    private static String password = "1234";
+    private static final String ruta = "jdbc:mysql://localhost:3306/java_curso?serverTimezone=UTC";
+    private static final String userName = "root";
+    private static final String password = "1234";
     private static Connection connection;
 
     //patron singleton
