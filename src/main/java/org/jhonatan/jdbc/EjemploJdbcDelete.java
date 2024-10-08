@@ -24,7 +24,7 @@ public class EjemploJdbcDelete {
             System.out.println(repositorio.porId(3l));
             System.out.println("\t========ELIMINACION DE PRODUCTO========");
             Producto p = new Producto();
-            p.setId(3l);
+            p.setId(13l);
 
             //guardamos
             repositorio.eliminar(p.getId());

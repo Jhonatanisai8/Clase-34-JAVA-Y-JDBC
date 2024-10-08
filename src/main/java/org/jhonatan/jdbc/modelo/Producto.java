@@ -69,7 +69,9 @@ public class Producto {
                 + " | "
                 + precio
                 + " | "
-                + fechaRegistro;
+                + fechaRegistro
+                + " | "
+                + categoria.getNombre();
     }
 
 }

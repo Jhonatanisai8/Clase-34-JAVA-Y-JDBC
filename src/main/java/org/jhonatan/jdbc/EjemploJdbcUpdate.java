@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jhonatan.jdbc.modelo.Categoria;
 import org.jhonatan.jdbc.modelo.Producto;
 import org.jhonatan.jdbc.modelo.repositorio.ProductoRepositorioImpl;
 import org.jhonatan.jdbc.modelo.repositorio.Repositorio;
@@ -25,10 +26,15 @@ public class EjemploJdbcUpdate {
             System.out.println(repositorio.porId(3l));
             System.out.println("\t========MODIFICACION DE PRODUCTO========");
             Producto p = new Producto();
-            p.setId(3l);
-            p.setNombre("Teclado Raizen");
-            p.setPrecio(340);
-
+            p.setId(13l);
+            p.setNombre("Laptop HP A232");
+            p.setPrecio(5600);
+            
+            //creamos la categoria y establecemos al producto
+            Categoria ca = new Categoria();
+            ca.setIdCategoria(2l);
+            p.setCategoria(ca);
+            
             //guardamos
             repositorio.guardar(p);
             System.out.println("Producto modificado con exito");
